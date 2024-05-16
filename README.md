@@ -54,3 +54,45 @@ FROM node:lts-alpine
 # ```
 RUN apk update && apk add --no-cache zsh git
 ```
+
+## Use pnpm
+
+By default CodeSandbox uses Yarn as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `engines.pnpm` in your `package.json`, activate that version using Corepack in your Dockerfile and add `pnpm install` to your `setupTasks`:
+
+`.codesandbox/Dockerfile`
+
+```dockerfile
+FROM node:lts-slim
+
+RUN corepack enable && corepack prepare pnpm@$(yq eval '.engines.pnpm' package.json) --activate
+```
+
+`.codesandbox/tasks.json`
+
+```json
+{
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "pnpm install"
+    }
+  ],
+  "tasks": {
+    "dev": {
+      "name": "dev",
+      "command": "pnpm dev",
+      "runAtStart": true
+    }
+  }
+}
+```
+
+`package.json`
+
+```json
+{
+  "engines": {
+    "pnpm": "9.1.0"
+  }
+}
+```
