@@ -57,12 +57,22 @@ RUN apk update && apk add --no-cache zsh git
 
 ## Use pnpm
 
-By default CodeSandbox uses Yarn v1 as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `engines.pnpm` in your `package.json`, enable Corepack in your Dockerfile and add `pnpm install` to your `setupTasks`:
+By default CodeSandbox uses Yarn v1 as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `packageManager` in your `package.json`, enable Corepack without download prompts in your Dockerfile and add `pnpm install` to your `setupTasks`:
 
 `.codesandbox/Dockerfile`
 
 ```dockerfile
 FROM node:lts-slim
+
+# Avoid Corepack download prompts during `pnpm install`, eg:
+#
+# ```
+# ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-9.1.1.tgz
+# ? Do you want to continue? [Y/n]
+# ```
+#
+# https://github.com/nodejs/corepack/tree/09528a8ea8f2a953b67c9079615eae3394531862#:~:text=COREPACK_ENABLE_DOWNLOAD_PROMPT
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN corepack enable
 ```
@@ -91,8 +101,6 @@ RUN corepack enable
 
 ```json
 {
-  "engines": {
-    "pnpm": "9.1.0"
-  }
+  "packageManager": "pnpm@9.1.1+sha512.14e915759c11f77eac07faba4d019c193ec8637229e62ec99eefb7cf3c3b75c64447882b7c485142451ee3a6b408059cdfb7b7fa0341b975f12d0f7629c71195"
 }
 ```
