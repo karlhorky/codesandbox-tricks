@@ -57,7 +57,7 @@ RUN apk update && apk add --no-cache zsh git
 
 ## Use pnpm
 
-By default CodeSandbox uses Yarn as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `engines.pnpm` in your `package.json`, enable Corepack in your Dockerfile and add `pnpm install` to your `setupTasks`:
+By default CodeSandbox uses Yarn v1 as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `engines.pnpm` in your `package.json`, enable Corepack in your Dockerfile and add `pnpm install` to your `setupTasks`:
 
 `.codesandbox/Dockerfile`
 
