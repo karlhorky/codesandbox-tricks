@@ -37,7 +37,7 @@ CodeSandbox uses `zsh` as the default shell (not configurable as of May 2024), a
 
 `.codesandbox/Dockerfile`
 
-````dockerfile
+```dockerfile
 FROM node:lts-alpine
 
 # 1. zsh is default shell on CodeSandbox - without it,
@@ -53,7 +53,7 @@ FROM node:lts-alpine
 # "/root/.oh-my-zsh/tools/check_for_upgrade.sh:31: command not found: git"
 # ```
 RUN apk update && apk add --no-cache zsh git
-````
+```
 
 ## Use pnpm
 
