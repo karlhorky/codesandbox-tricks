@@ -55,6 +55,18 @@ FROM node:lts-alpine
 RUN apk update && apk add --no-cache zsh git
 ```
 
+## Use Node.js Nightly
+
+To test an unreleased feature of (eg. [`node:sqlite`](https://github.com/nodejs/node/pull/53752) as of July 2024), use a nightly version of Node.js with [`node-nightly`](https://www.npmjs.com/package/node-nightly) by [@hemanth](https://github.com/hemanth/):
+
+1. Create a new Node.js devbox by clicking Fork at top right on https://codesandbox.io/p/devbox/github/codesandbox/sandbox-templates/tree/main/node
+2. In `package.json`, change the `start` script to `CI=true npx node-nightly index.js`
+3. Run `npx node-nightly --update` manually in the terminal to get the latest version
+
+Example CodeSandbox demo with `node:sqlite`: https://codesandbox.io/p/devbox/node-sqlite-with-node-js-nightly-vygw6p?file=%2Findex.js
+
+![Screenshot 2024-07-14 at 12 27 04](https://github.com/user-attachments/assets/a720ef21-a7d3-4715-b48c-0ca284e44dd5)
+
 ## Use pnpm
 
 By default CodeSandbox uses Yarn v1 as a package manager. To use pnpm in a reproducible way, configure your desired pnpm version in `packageManager` in your `package.json`, enable Corepack without download prompts in your Dockerfile and add `pnpm install` to your `setupTasks`:
